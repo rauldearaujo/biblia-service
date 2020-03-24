@@ -30,6 +30,7 @@ app.get("/", function(req, res){
     res.send("Biblia-Service working!");
 });
 
-app.listen(30000, function () {
-    console.log('Example app listening on port 30000!');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Our app is running on port ${ PORT }`);
 });
