@@ -26,6 +26,10 @@ app.post('/texto', function(req, res){
     res.json(texto.split("\n"));
 });
 
+app.get("/", function(req, res){
+    res.send("Biblia-Service working!");
+});
+
 app.listen(30000, function () {
     console.log('Example app listening on port 30000!');
 });
