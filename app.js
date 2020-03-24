@@ -1,0 +1,31 @@
+var express = require('express');
+var cors = require('cors');
+const fs = require('fs');
+
+app = express();
+app.use(express.json());
+app.use(cors());
+
+app.get('/livros', function(req, res){
+    let livrosAT = fs.readdirSync('Biblia Ave-Maria/AT').map((nomeLivro) => {return nomeLivro.slice(3)});
+    let livrosNT = fs.readdirSync('Biblia Ave-Maria/NT').map((nomeLivro) => {return nomeLivro.slice(3)});
+    let livros = {
+        AT: livrosAT,
+        NT: livrosNT
+    } 
+    res.json(livros);
+});
+
+app.post('/capitulos', function(req, res) {
+    let capitulos = fs.readdirSync(`Biblia Ave-Maria/${req.body.testamento}/${req.body.livro}`).map((capitulo) => {return capitulo.slice(0, -4)})
+    res.json(capitulos);
+});
+
+app.post('/texto', function(req, res){
+    let texto = fs.readFileSync(`Biblia Ave-Maria/${req.body.testamento}/${req.body.livro}/${req.body.capitulo}.txt`).toString('ucs2');
+    res.json(texto.split("\n"));
+});
+
+app.listen(30000, function () {
+    console.log('Example app listening on port 30000!');
+});
