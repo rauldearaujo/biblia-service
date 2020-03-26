@@ -23,6 +23,9 @@ app.post('/capitulos', function(req, res) {
 
 app.post('/texto', function(req, res){
     let texto = fs.readFileSync(`Biblia Ave-Maria/${req.body.testamento}/${req.body.livro}/${req.body.capitulo}.txt`).toString('ucs2');
+    texto = texto.replace(/\s+/g, " ");
+    texto = texto.replace(/\n+/g, "\n");
+    texto = texto.replace(/\r+|\t+/g, "");
     res.json(texto.split("\n"));
 });
 
