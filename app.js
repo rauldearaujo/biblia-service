@@ -22,9 +22,10 @@ app.post('/capitulos', function(req, res) {
 });
 
 app.post('/texto', function(req, res){
-    let texto = fs.readFileSync(`Biblia Ave-Maria/${req.body.testamento}/${req.body.livro}/${req.body.capitulo}.txt`).toString('ucs2');
-    texto = texto.replace(/\n+/g, "\n");
-    texto = texto.replace(/(\r+)|(\t+)/g, "");
+    let texto = fs.readFileSync(`Biblia Ave-Maria/${req.body.testamento}/${req.body.livro}/${req.body.capitulo}.txt`).toString('ucs2').toString('utf8');
+    texto = texto.replace(/(\r+)|(\t+)/g, '\n');
+    texto = texto.replace(/\n+/g, '\n');
+    texto = texto.trim();
     res.json(texto.split("\n"));
 });
 
